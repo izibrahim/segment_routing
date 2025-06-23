@@ -1,0 +1,78 @@
+RP/0/0/CPU0:sr-r4#terminal length 0
+Mon Jun 23 11:05:32.368 UTC
+RP/0/0/CPU0:sr-r4#sh running-config 
+Mon Jun 23 11:05:33.518 UTC
+Building configuration...
+!! IOS XR Configuration 6.3.1
+!! Last configuration change at Mon Jun 23 10:28:40 2025 by cisco
+!
+hostname sr-r4
+interface Loopback0
+ ipv4 address 4.4.4.4 255.255.255.255
+!
+interface MgmtEth0/0/CPU0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/0
+ shutdown
+!
+interface GigabitEthernet0/0/0/1
+ shutdown
+!
+interface GigabitEthernet0/0/0/2
+ shutdown
+!
+interface GigabitEthernet0/0/0/3
+ shutdown
+!
+interface GigabitEthernet0/0/0/4
+ ipv4 address 10.1.24.4 255.255.255.0
+!
+interface GigabitEthernet0/0/0/5
+ ipv4 address 10.1.45.4 255.255.255.0
+!
+router isis 100
+ net 49.0004.4444.4444.4444.00
+ address-family ipv4 unicast
+  metric-style wide
+  segment-routing mpls
+ !
+ interface Loopback0
+  address-family ipv4 unicast
+   prefix-sid index 4
+  !
+ !
+ interface GigabitEthernet0/0/0/0
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/1
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/2
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/3
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/4
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/5
+  address-family ipv4 unicast
+  !
+ !
+ interface GigabitEthernet0/0/0/6
+  address-family ipv4 unicast
+  !
+ !
+!
+segment-routing
+ global-block 16000 17010
+!
+end
+
