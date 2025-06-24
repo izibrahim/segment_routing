@@ -1,0 +1,57 @@
+
+Conf t
+segment-routing
+ global-block 16000 17010
+ traffic-eng
+  segment-list name SIDLIST1
+   index 10 mpls label 16001
+   index 20 mpls label 16002
+   index 30 mpls label 16003
+   index 40 mpls label 16004
+   index 50 mpls label 16005
+  !
+  policy TST
+   color 1 end-point ipv4 5.5.5.5
+   candidate-paths
+    preference 100
+     explicit segment-list SIDLIST1
+     !
+    !
+   !
+  !
+ !
+!
+
+verification
+RP/0/0/CPU0:sr-r0#show segment-routing traffic-eng forwarding policy
+Tue Jun 24 09:34:22.799 UTC
+Policy        Segment         Outgoing    Outgoing     Next Hop        Bytes       
+Name          List            Label       Interface                    Switched    
+------------- --------------- ----------- ------------ --------------- ------------
+TST           SIDLIST1        16002       Gi0/0/0/0    10.0.0.2        0           
+RP/0/0/CPU0:sr-r0#
+RP/0/0/CPU0:sr-r0#
+RP/0/0/CPU0:sr-r0#sh segment-routing traffic-eng policy             
+Tue Jun 24 09:35:11.406 UTC
+
+SR-TE policy database
+---------------------
+
+Name: TST (Color: 1, End-point: 5.5.5.5)
+  Status:
+    Admin: up  Operational: up for 00:15:56 (since Jun 24 09:19:14.771)
+  Candidate-paths:
+    Preference 100:
+      Explicit: segment-list SIDLIST1 (active)
+        Weight: 0
+          16001
+          16002
+          16003
+          16004
+          16005
+  Attributes:
+    Binding SID: 24002
+      Allocation mode: dynamic
+      State: programmed
+      Policy selected: yes
+    Forward Class: 0
