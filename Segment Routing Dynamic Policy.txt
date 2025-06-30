@@ -1,0 +1,40 @@
+router isis 100
+ net 49.0001.1111.1111.1111.00
+ distribute link-state
+ address-family ipv4 unicast
+  metric-style wide
+  router-id Loopback0
+  segment-routing mpls
+ !
+ interface Loopback0
+  circuit-type level-2-only
+  address-family ipv4 unicast
+   prefix-sid index 100
+  !
+ !
+ interface GigabitEthernet0/0/0/0
+  circuit-type level-2-only
+  point-to-point
+  address-family ipv4 unicast
+  !
+ !
+!
+segment-routing
+ global-block 16000 17000
+ traffic-eng
+  candidate-paths
+  !
+  policy POL0
+   color 1 end-point ipv4 102.1.1.1
+   candidate-paths
+    preference 150
+     dynamic
+      metric
+       type igp
+      !
+     !
+    !
+   !
+  !
+ !
+!
